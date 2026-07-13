@@ -1,11 +1,11 @@
 ---
-name: "enscribe"
+name: "Kyle Atwood"
 pronouns: "he/him"
-avatar: "https://avatars.githubusercontent.com/u/71956291?v=4"
+avatar: "https://avatars.githubusercontent.com/u/292811883?v=4"
 bio: "d(-_-)b"
-mail: "jason@enscribe.dev"
+mail: "mailto:ebx32@proton.me"
 socials:
-  website: "https://enscribe.dev"
-  twitter: "https://twitter.com/enscrbe"
-  github: "https://github.com/jktrn"
+  website: "https://ebx32.github.io"
+  twitter: "https://bsky.app/profile/astrokyle.bsky.social"
+  github: "https://github.com/ebx32"
 ---
