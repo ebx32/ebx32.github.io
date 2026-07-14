@@ -26,6 +26,10 @@ tags:
   }
 </style>
 
+$$ 
+\frac{d}{dt}\left( \frac{\partial L}{\partial \dot{q}_i} \right) - \frac{\partial  L}{\partial q_i} = 0 
+$$
+
 ## Introduction
 
 On September 10, 2024 <dim-span>(634 days ago!)</dim-span> I ventured to build myself my perfect template. I wanted it to be the Phillips screwdriver of my toolkit that I would take to any project. I took the stack that I loved using, all the libraries I knew inside-out, the utilities I perpetually used, and bundled it into a neat package that I open-sourced for the world. The reception was enthusiastic <dim-span>(thanks for 750 stars!)</dim-span>, and since then I've seen dozens of cool projects pop up. I'm so glad I got to facilitate creating personal spaces for others around the internet.

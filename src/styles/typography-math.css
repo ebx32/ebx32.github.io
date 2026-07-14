@@ -397,3 +397,16 @@ prose-content {
     overflow-y: hidden;
   }
 }
+
+/*OVERRIDE*/
+
+math-display {
+  display: block;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+math.tml-display {
+  display: block;
+  width: 100%;
+}

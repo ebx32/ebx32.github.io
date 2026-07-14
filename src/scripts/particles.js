@@ -4,7 +4,7 @@ const particleConfig = {
   enable: true,
   chars: [".", ".", "#", "~", ":", "'", "*"],
   mobileBreakpoint: 760,
-  count: { desktop: 128, mobile: 42 },
+  count: { desktop: 170, mobile: 42 },
   opacity: [0.22, 0.55],
   driftX: [-0.22, 0.22],
   driftY: [-0.55, -0.15], // -ve = upwards
