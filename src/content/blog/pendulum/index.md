@@ -4,7 +4,7 @@ description: "Lagrangian mechanics, Runge-Kutta 4, raylib and a simple pendulum!
 date: 2026-06-06
 authors:
     - enscribe
-image: ./assets/potw1802a(1).jpg
+image: ./assets/banner.jpg
 tags:
     - physics
     - simulation
@@ -15,7 +15,7 @@ tags:
 
 The main goal of this project is to simulate a simple pendulum (without damping) in C using the raylib graphics library to animate its motion. The equation governing the pendulum's motion is derived using Lagrangian mechanics, which is explained thoroughly throughout this post. I chose this approach because (most) future projects in this series will also use Lagrangian mechanics as the primary method for deriving equations of motion. Moreover, this write-up serves as the first entry in my computational physics series, for which I have many projects planned. For all my posts throughout this series, you can find my handwritten (albeit messy) notes at the very end, which you can navigate to via the right TOC sidebar.
 
-1. Solidify the understanding of 
+1. Solidify the understanding of
 
 ## Derivation of Equation of Motion
 
@@ -97,8 +97,6 @@ t_{n+1} &= t_n + \Delta t
 \end{align}
 $$
 
-
-
 $$
 \begin{align}
 \ddot{\theta} &= \frac{d^2\theta}{dt^2} = \frac{d}{dt}\Bigg(\frac{d\theta}{dt}\Bigg) = \frac{d\omega}{dt} \\
@@ -119,23 +117,23 @@ $$
 ```c title="pendulum.c"
 #include <raylib.h>
 
-#define WIDTH 900
-#define HEIGHT 6000
+#define WIDTH 900.0f
+#define HEIGHT 600.0f
 
 int main() {
     // initialization goes here
     InitWindow(WIDTH, HEIGHT, "Simple Pendulum");
-    
+
     SetTargetFPS(60);
     while (!WindowShouldClose()) {
 
         // updating and function call goes here
-        
+
         BeginDrawing();
         ClearBackground(BLACK);
 
         // drawing goes here
-        
+
         EndDrawing();
     }
     CloseWindow();
@@ -147,30 +145,6 @@ int main() {
 gcc -Wall -Wextra -Werror pendulum.c -o pendulum -lraylib -lm
 ```
 
-:::tip[Alternative: Automating compilation with Makefile]
-Or alternatively, you can create a `Makefile` and compile your program by running `make` in the terminal.
-
-```Makefile title="Makefile"
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iinclude
-CEXTRA = -lraylib -lm
-BIN = bin
-
-TARGET = $(BIN)/pendulum
-SRC = pendulum.c
-
-all: $(TARGET)
-
-$(TARGET): $(SRC)
-        $(CC) $(CFLAGS) $(SRC) -o $(TARGET) $(CEXTRA)
-
-clean:
-        rm -rf $(TARGET)
-
-.PHONY: all clean
-```
-:::
-
 Running this we get an empty window, as expected.
 
 <!--![](./assets/sc1.png)-->
@@ -180,8 +154,8 @@ Our next step would be to set up the structure for the bob and initialize it and
 ```c ins={5, 7-13, 17-29} collapse={31-47}
 #include <raylib.h>
 
-#define WIDTH 900
-#define HEIGHT 600
+#define WIDTH 900.0f
+#define HEIGHT 600.0f
 #define G 9.81
 
 struct Bob {
@@ -194,20 +168,20 @@ struct Bob {
 
 int main() {
 
-    Vector2 O = {WIDTH/2, HEIGHT/4}
+    Vector2 O = {WIDTH/2, HEIGHT/4};
 
     struct Bob b1 = {
         .theta = 60.0f * PI / 180.0f, // convert to radians
         .omega = 0.0,
         .L = 200.0f,
-        .r = 5.0f,
-    }
+        .r = 5.0f
+    };
 
     b1.pos = (Vector2){
-        O.x + L * sinf(b1.theta),
-        O.y + L * cosf(b1.theta)
-    }
-    
+        O.x + b1.L * sinf(b1.theta),
+        O.y + b1.L * cosf(b1.theta)
+    };
+
     InitWindow(WIDTH, HEIGHT, "Simple Pendulum");
 
     SetTargetFPS(60);
@@ -217,8 +191,6 @@ int main() {
 
         BeginDrawing();
         ClearBackground(BLACK);
-
-        DrawCircleV(, 5, BLUE);
 
         EndDrawing();
     }
@@ -231,13 +203,13 @@ Using a struct in this case isn't necessary but it makes it easier to figure out
 
 At this point we've initialized all the variables and from here onwards we'll be working within the while loop, slowly constructing our simulation's control flow and logic.
 
-This is fairly simple in words, you'll update $\theta$ and $\omega$ using RK4 (which we'll define as a utility function), use the results to calculate the $x$ and $y$ coordinates of the bob then use `DrawRecatangleV` and `DrawCircleV` to draw the bob and rod into the new frame. But easier said than done, right?
+This is fairly simple in words, you'll calculate $\theta$ and $\omega$ using RK4 (which we'll define as a utility function), use the results to update the $x$ and $y$ coordinates of the bob then use `DrawRecatangleV` and `DrawCircleV` to draw the bob and rod into the new frame. But easier said than done, right?
 
 ```c collapse={1-14, 16-33} ins={37-42, 47-49} del={36}
 #include <raylib.h>
 
-#define WIDTH 900
-#define HEIGHT 600
+#define WIDTH 900.0f
+#define HEIGHT 600.0f
 #define G 9.81
 
 struct Bob {
@@ -250,32 +222,32 @@ struct Bob {
 
 int main() {
 
-    Vector2 O = {WIDTH/2, HEIGHT/4}
+    Vector2 O = {WIDTH/2, HEIGHT/4};
 
     struct Bob b1 = {
         .theta = 60.0f * PI / 180.0f, // convert to radians
         .omega = 0.0,
         .L = 200.0f,
-        .r = 5.0f,
-    }
+        .r = 5.0f
+    };
 
     b1.pos = (Vector2){
-        O.x + L * sinf(b1.theta),
-        O.y + L * cosf(b1.theta)
-    }
-    
+        O.x + b1.L * sinf(b1.theta),
+        O.y + b1.L * cosf(b1.theta)
+    };
+
     InitWindow(WIDTH, HEIGHT, "Simple Pendulum");
 
     SetTargetFPS(60);
     while (!WindowShouldClose()) {
 
-        // updating and function call goes here    
+        // updating and function call goes here
         update();
-         
+
         b1.pos = (Vector2) {
-            O.x + L * sinf(theta),
-            O.y + L * cosf(theta)
-        }
+            O.x + b1.L * sinf(theta),
+            O.y + b1.L * cosf(theta)
+        };
 
         BeginDrawing();
         ClearBackground(BLACK);
@@ -291,6 +263,156 @@ int main() {
 }
 ```
 
+Let us draw the pivot, bob and rod now, and see how it looks like.
+
+![](./assets/sc/2.png)
+
+There's our pendulum. YOu'll notice that it ins't moving, and that's because we're not updating anything yet. Here's where our `rk4Step()` function comes in. This is where we implement the fourth-order Runge-Kutta method, and we will do it exacly as it was previously discussed in the earlier section.
+
+```c
+void derivatives(float theta, float omega, float L, float *k_theta, float *k_omega) {
+    *k_theta = omega;
+    *k_omega = -(G/L) * sinf(theta);
+}
+
+void rk4Step(struct Bob *b) {
+
+    float k1_theta, k2_theta, k3_theta, k4_theta;
+    float k1_omega, k2_omega, k3_omega, k4_omega;
+    const float dt = 1.0f/60.0f;
+
+    derivatives(b->theta, b->omega, b->L, &k1_theta, &k1_omega);
+    derivatives(
+            b->theta + 0.5f * dt * k1_theta,
+            b->omega + 0.5f * dt * k1_omega,
+            b->L,
+            &k2_theta, &k2_omega
+    );
+    derivatives(
+            b->theta + 0.5f * dt * k2_theta,
+            b->omega + 0.5f * dt * k2_omega,
+            b->L,
+            &k3_theta, &k3_omega
+    );
+    derivatives(
+            b->theta + dt * k3_theta,
+            b->omega + dt * k3_omega,
+            b->L,
+            &k4_theta, &k4_omega
+    );
+
+    // update theta and omega
+    b->theta += (dt/6) * (k1_theta + 2*k2_theta + 2*k3_theta + k4_theta);
+    b->omega += (dt/6) * (k1_omega + 2*k2_omega + 2*k3_omega + k4_omega);
+}
+```
+
+`rk4Step` uses a utility funtion `derivatives` which uses the first order differential equations to calculate the value of the slope $k_n, \space \space n = 0, 1, 2, 3, ...$, which we then use to update $\theta$ and $\omega$.
+
+Putting this all together we get,
+
+```c ins={16-50, 74}
+#include <raylib.h>
+#include <math.h>
+
+#define WIDTH 900.0f
+#define HEIGHT 600.0f
+#define G 981
+
+struct Bob {
+    Vector2 pos;
+    float theta;
+    float omega;
+    const float L;
+    const float r;
+};
+
+void derivatives(float theta, float omega, float L, float *k_theta, float *k_omega) {
+    *k_theta = omega;
+    *k_omega = -(G/L) * sinf(theta);
+}
+
+void rk4Step(struct Bob *b) {
+
+    float k1_theta, k2_theta, k3_theta, k4_theta;
+    float k1_omega, k2_omega, k3_omega, k4_omega;
+    const float dt = 1.0f/60.0f;
+
+    derivatives(b->theta, b->omega, b->L, &k1_theta, &k1_omega);
+    derivatives(
+            b->theta + 0.5f * dt * k1_theta,
+            b->omega + 0.5f * dt * k1_omega,
+            b->L,
+            &k2_theta, &k2_omega
+    );
+    derivatives(
+            b->theta + 0.5f * dt * k2_theta,
+            b->omega + 0.5f * dt * k2_omega,
+            b->L,
+            &k3_theta, &k3_omega
+    );
+    derivatives(
+            b->theta + dt * k3_theta,
+            b->omega + dt * k3_omega,
+            b->L,
+            &k4_theta, &k4_omega
+    );
+
+    // update theta and omega
+    b->theta += (dt/6) * (k1_theta + 2*k2_theta + 2*k3_theta + k4_theta);
+    b->omega += (dt/6) * (k1_omega + 2*k2_omega + 2*k3_omega + k4_omega);
+}
+
+int main() {
+
+    Vector2 O = {WIDTH/2, HEIGHT/4};
+
+    struct Bob b1 = {
+        .theta = 60.0f * PI / 180.0f, // convert to radians
+        .omega = 0.0f,
+        .L = 200.0f,
+        .r = 10.0f
+    };
+
+    b1.pos = (Vector2){
+        O.x + b1.L * sinf(b1.theta),
+        O.y + b1.L * cosf(b1.theta)
+    };
+
+    InitWindow(WIDTH, HEIGHT, "Simple Pendulum");
+
+    SetTargetFPS(60);
+    while (!WindowShouldClose()) {
+
+        // updating and function call goes here
+        rk4Step(&b1);
+
+        b1.pos = (Vector2) {
+            O.x + b1.L * sinf(b1.theta),
+            O.y + b1.L * cosf(b1.theta)
+        };
+
+        BeginDrawing();
+        ClearBackground(BLACK);
+
+        DrawCircleV(O, 5.0f, RED); // origin
+        DrawLineEx(O, b1.pos, 3.0f, YELLOW);
+        DrawCircleV(b1.pos, b1.r, BLUE);
+
+        EndDrawing();
+    }
+    CloseWindow();
+    return 0;
+}
+```
+
+Now let's run this and see what we get.
+
+<video src="/videos/pendulum.mp4" width="640" height="360" controls>
+  Your browser does not support the video tag.
+</video>
+
+And that's out pendulum folks. 
 
 ## Handwritten Notes
 
