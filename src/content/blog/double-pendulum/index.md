@@ -21,6 +21,10 @@ One approach was to resolve forces into their horizontal and vertical components
 
 ## Mathematical Derivation of Equations of Motion
 
+:::note
+A lot of the step-by-step working has been condensed for the sake of brevity. You can find everything in the written notes at the end of the page. 
+:::
+
 Before we begin we must make 2 main assumptions of the system. The first is that **the bobs are treated as point masses**. This ensures that only their translational motion contributes to the system's dynamics. The next is that **the rods connecting the bobs are massless and rigit**. This means they do not contribute to the system's kinetic and potential energy and serve only to constrain the bob's motion.
 
 ![](./assets/double-pendulum.png)
@@ -31,10 +35,10 @@ We'll begin by determining the positions $A(x_1, y_1)$ and $B(x_2, y_2)$ of the 
 
 $$
 \begin{align}
-x_1 &= L_1 \sin\theta_1, &
-y_1 &= -L_1 \cos\theta_1, \\
-x_2 &= L_1 \sin\theta_1 + L_2 \sin\theta_2, &
-y_2 &= -L_1 \cos\theta_1 - L_2 \cos\theta_2.
+x_1 &= L_1 \sin\theta_1 \\
+y_1 &= -L_1 \cos\theta_1 \\
+x_2 &= L_1 \sin\theta_1 + L_2 \sin\theta_2 \\
+y_2 &= -L_1 \cos\theta_1 - L_2 \cos\theta_2 \\
 \end{align}
 $$
 
@@ -42,12 +46,10 @@ Next we must obtain their velocities, we do this by differentiating the equation
 
 $$
 \begin{align}
-\dot{x}_1 &= L_1 \dot{\theta}_1 \cos\theta_1, &
-\dot{y}_1 &= L_1 \dot{\theta}_1 \sin\theta_1, \\
-\dot{x}_2 &= L_1 \dot{\theta}_1 \cos\theta_1
-           + L_2 \dot{\theta}_2 \cos\theta_2, &
-\dot{y}_2 &= L_1 \dot{\theta}_1 \sin\theta_1
-           + L_2 \dot{\theta}_2 \sin\theta_2.
+\dot{x}_1 &= L_1 \dot{\theta}_1 \cos\theta_1 \\
+\dot{y}_1 &= L_1 \dot{\theta}_1 \sin\theta_1 \\
+\dot{x}_2 &= L_1 \dot{\theta}_1 \cos\theta_1  + L_2 \dot{\theta}_2 \cos\theta_2 \\
+\dot{y}_2 &= L_1 \dot{\theta}_1 \sin\theta_1 + L_2 \dot{\theta}_2 \sin\theta_2 \\
 \end{align}
 $$
 
@@ -58,16 +60,6 @@ $$
 T &= \frac{1}{2} m_1 v_1^2 + \frac{1}{2} m_2 v_2^2 \\
 &= \frac{1}{2} m_1 \left( \dot{x}_1^2 + \dot{y}_1^2 \right)
    + \frac{1}{2} m_2 \left( \dot{x}_2^2 + \dot{y}_2^2 \right) \\
-&= \frac{1}{2} m_1 L_1^2 \dot{\theta}_1^2
-   \cancelto{1}{\left( \cos^2\theta_1 + \sin^2\theta_1 \right)}
-   + \frac{1}{2} m_2 \left(
-   L_1^2 \dot{\theta}_1^2
-   \cancelto{1}{\left( \cos^2\theta_1 + \sin^2\theta_1 \right)}
-   + L_2^2 \dot{\theta}_2^2
-   \cancelto{1}{\left( \cos^2\theta_2 + \sin^2\theta_2 \right)}
-   + 2 L_1 L_2 \dot{\theta}_1 \dot{\theta}_2
-   \left( \cos\theta_1 \cos\theta_2 + \sin\theta_1 \sin\theta_2 \right)
-   \right) \\
 &= \frac{1}{2} m_1 L_1^2 \dot{\theta}_1^2
    + \frac{1}{2} m_2 \left(
    L_1^2 \dot{\theta}_1^2
@@ -90,21 +82,13 @@ V &= m_1 g y_1 + m_2 g y_2 \\
 \tag{10}
 $$
 
-The Lagrangian $L$ of the double pendulum is therefore:
+The Lagrangian $L$ of the double pendulum, $(9) - (10)$ is therefore:
 
 $$
 \begin{aligned}
-L &= \frac{1}{2} m_1 L_1^2 \dot{\theta}_1^2
-   + \frac{1}{2} m_2 \left(
-   L_1^2 \dot{\theta}_1^2
-   + L_2^2 \dot{\theta}_2^2
-   + 2 L_1 L_2 \dot{\theta}_1 \dot{\theta}_2 \cos(\theta_1 - \theta_2)
-   \right)
-   + (m_1 + m_2) g L_1 \cos\theta_1
-   + m_2 g L_2 \cos\theta_2 \\
-&= \frac{1}{2} (m_1 + m_2) L_1^2 \dot{\theta}_1^2
-   + \frac{1}{2} m_2 L_2^2 \dot{\theta}_2^2
-   + m_2 L_1 L_2 \dot{\theta}_1 \dot{\theta}_2 \cos(\theta_1 - \theta_2)
+L &= \frac{1}{2} (m_1 + m_2) L_1^2 \dot{\theta}_1^2
+   + \frac{1}{2} m_2 L_2^2 \dot{\theta}_2^2 \\
+   &+ m_2 L_1 L_2 \dot{\theta}_1 \dot{\theta}_2 \cos(\theta_1 - \theta_2)
    + (m_1 + m_2) g L_1 \cos\theta_1
    + m_2 g L_2 \cos\theta_2
 \end{aligned}
@@ -125,15 +109,15 @@ The canonical momenta $\left( \frac{\partial L}{\partial \dot{q}_i} \right)$ ass
 $$
 \begin{align}
 p_{\theta_1}
-&= \frac{\partial L}{\partial \dot{\theta}_1} \\
-&= (m_1 + m_2) L_1^2 \dot{\theta}_1
+&= \frac{\partial L}{\partial \dot{\theta}_1} 
+= (m_1 + m_2) L_1^2 \dot{\theta}_1
    + m_2 L_1 L_2 \dot{\theta}_2
-   \cos(\theta_1 - \theta_2), \\
+   \cos(\theta_1 - \theta_2) \\
 p_{\theta_2}
-&= \frac{\partial L}{\partial \dot{\theta}_2} \\
-&= m_2 L_2^2 \dot{\theta}_2
+&= \frac{\partial L}{\partial \dot{\theta}_2} 
+= m_2 L_2^2 \dot{\theta}_2
    + m_2 L_1 L_2 \dot{\theta}_1
-   \cos(\theta_1 - \theta_2).
+   \cos(\theta_1 - \theta_2)
 \end{align}
 $$
 
@@ -142,14 +126,29 @@ We can use the **product rule** and **chain rule** to differentiate the canoninc
 $$
 \begin{aligned}
 \frac{dp_{\theta_1}}{dt}
-&= (m_1 + m_2)L_1^2\frac{d\dot{\theta_1}}{dt} +
-m_2L_1L_2\Bigg(\frac{d\dot{\theta_2}}{dt}\cos(\theta_1 - \theta_2) + \dot{\theta_2}\frac{d}{dt}\cos(\theta_1 - \theta_2) \Bigg) \\
+
 &= (m_1 + m_2)L_1^2\ddot{\theta_1} +
-m_2L_1L_2\big(\ddot{\theta_2}cos(\theta_1 - \theta_2) - \dot{\theta_2}(\dot{\theta_1} - \dot{\theta_2})sin(\theta_1 - \theta_2)\big)\\
-&= (m_1 + m_2)L_1^2\ddot{\theta_1} + m_2L_1L_2\ddot{\theta}_2^2
+m_2L_1L_2\bigg(\ddot{\theta_2}cos(\theta_1 - \theta_2) - \dot{\theta_2}(\dot{\theta_1} - \dot{\theta_2})sin(\theta_1 - \theta_2)\bigg)\\
+
+&= (m_1 + m_2)L_1^2\ddot{\theta_1} + m_2L_1L_2\ddot{\theta}_2^2\cos(\theta_1 - \theta_2) - m_2L_1L_2\dot{\theta}_1\dot{\theta}_2\sin(\theta_1 - \theta_2) + 
+m_2L_1L_2\dot{\theta}_2^2\sin(\theta_1 - \theta_2)
 \end{aligned}
 \tag{11}
 $$
+
+$$
+\begin{aligned}
+\frac{dp_{\theta_2}}{dt}
+&= m_2L_1^2\ddot{\theta_1} + m_2L_1L_2\ddot{\theta}_1\cos(\theta_1 - \theta_2) 
+- m_2L_1L_2\dot{\theta}_1^2\sin(\theta_1 - \theta_2) 
++ m_2L_1L_2\dot{\theta}_1\dot{\theta}_2\sin(\theta_1 - \theta_2)
+\end{aligned}
+\tag{12}
+$$
+
+Then we find $$\frac{\partial L}{\partial \theta_i}$$
+
+
 
 ---
 

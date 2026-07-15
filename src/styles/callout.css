@@ -11,6 +11,7 @@ prose-content {
     padding-block: 0.75rem;
     padding-inline: 1rem 0;
     border-inline-start: 4px solid var(--callout-border);
+    background-color: rgb( from var(--accent) r g b / 0.07);
 
     > summary {
       display: flex;
