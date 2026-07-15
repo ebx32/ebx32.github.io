@@ -12,7 +12,7 @@ export const ecOptions: SatteriExpressiveCodeOptions = {
     `[data-theme="${theme.name === "github-dark" ? "dark" : "light"}"]`,
   plugins: [pluginCollapsibleSections(), pluginLineNumbers()],
   defaultProps: {
-    wrap: true,
+    wrap: false,
     showLineNumbers: true,
     collapseStyle: "collapsible-auto",
     overridesByLang: {
