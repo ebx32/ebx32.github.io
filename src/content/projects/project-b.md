@@ -1,9 +1,9 @@
 ---
-name: "Project B"
-description: "This is an example project description! You should replace this with a description of your own project."
-tags: ["Framework A", "Library B", "Tool C", "Resource D"]
-image: "./placeholder.png"
-link: "https://example.com"
-startDate: "2024-02-01"
-endDate: "2024-03-01"
+name: "CHIP-8 Emulator"
+description: "CHIP-8 Emulator written in C."
+tags: ["Emudev", "C"]
+image: "https://raw.githubusercontent.com/Timendus/chip8-test-suite/refs/heads/main/pictures/ibm-logo.png" 
+link: "https://github.com/ebx32/chip8"
+startDate: "2026-07-21"
+# endDate: "2024-03-01"
 ---

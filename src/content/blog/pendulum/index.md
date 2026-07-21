@@ -3,7 +3,7 @@ title: "Simulating a Simple Pendulum using RK4 and Raylib in C"
 description: "Lagrangian mechanics, Runge-Kutta 4, raylib and a simple pendulum!"
 date: 2026-06-06
 authors:
-    - enscribe
+    - astrokyle
 image: ./assets/banner.jpg
 tags:
     - physics

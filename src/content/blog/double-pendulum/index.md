@@ -3,12 +3,13 @@ title: "Simulating a Double Pendulum using RK4 and Raylib in C"
 description: "Lagrangian mechanics, Runge-Kutta 4, raylib and a chaotic double pendulum!"
 date: 2026-06-06
 authors:
-    - enscribe
+    - astrokyle
 image: ./assets/banner.png
 tags:
     - physics
     - simulation
     - C
+draft: true
 ---
 
 ## Objective

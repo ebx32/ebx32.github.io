@@ -1,8 +1,9 @@
 ---
-name: "Project C"
-description: "This is an example project description! You should replace this with a description of your own project."
-tags: ["Framework A", "Library B", "Tool C", "Resource D"]
-image: "./placeholder.png"
-link: "https://example.com"
-startDate: "2024-03-01"
+name: "Helios C2 Framework"
+description: "Open Source Command and Control (C2) framework written in Python and Rust."
+tags: ["Cybersecurity", "Rust", "Python", "Exploit Dev"]
+image: "./heliosc2.png"
+link: "https://github.com/ebx32/helios"
+startDate: "2026-07-21"
+# startDate: "YYYY-MM-DD"
 ---

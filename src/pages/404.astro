@@ -1,12 +1,25 @@
 ---
-import MetaPage from "@/components/MetaPage.astro"
-import Layout from "@/layouts/Layout.astro"
+import MetaPage from "@/components/MetaPage.astro";
+import Layout from "@/layouts/Layout.astro";
 ---
 
 <Layout crumbs={[{ label: "404", href: "/404" }]}>
-  <MetaPage slot="head" title="404" />
-  <prose-content>
-    <h1>404</h1>
-    <p>This page does not exist.</p>
-  </prose-content>
+    <MetaPage slot="head" title="404" />
+    <prose-content>
+        <img src="/static/404.png" alt="" />
+        <p>
+            Uh Oh... I think you got the wrong URL. Why don't you head back <a
+                href="/index.html">home</a
+            > and find your way from there....
+        </p>
+        <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube-nocookie.com/embed/tnV7dTXlXxs?si=1cPC-f_X5mOtg49L"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+    </prose-content>
 </Layout>

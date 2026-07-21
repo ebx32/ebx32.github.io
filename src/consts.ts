@@ -21,7 +21,6 @@ export const NAVIGATION = [
 
 export const SOCIALS: { href: string; label: string; icon: SvgComponent }[] = [
   { href: "https://github.com/ebx32", label: "GitHub", icon: GitHub },
-  { href: "https://bsky.app/profile/astrokyle.bsky.social", label: "Bluesky", icon: Bluesky },
   { href: "mailto:ebx32@proton.me", label: "Email", icon: Email },
   { href: "/rss.xml", label: "RSS", icon: RSS },
 ]

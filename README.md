@@ -1,57 +1,16 @@
-## astro-erudite
+## ebx32's portfolio//blog
 
-astro-erudite is [enscribe](https://enscribe.dev)'s opinionated, unstyled static blogging template built with [Astro](https://astro.build/) and native CSS. astro-erudite uses no UI framework, no CSS framework, and contains minimal dependencies.
+![](./public/static/hello.png)
 
-> [!IMPORTANT]
-> astro-erudite has recently been updated to v2. To learn what changed and why, read the following blog post: [Introducing astro-erudite v2](https://astro-erudite.vercel.app/blog/introducing-v2). If you're migrating an existing v1 project, see [breaking changes](https://astro-erudite.vercel.app/blog/introducing-v2#breaking-changes).
-
-## Features
-
-- A design system built entirely on native CSS, using [autonomous custom elements](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements) and [Utopia](https://utopia.fyi/) fluid type and space scales.
-- The ridiculously fast [Sätteri](https://satteri.bruits.org/) Markdown processor (written in Rust)
-- [Expressive Code](https://expressive-code.com/) for code blocks and inline code, with `` `code{:lang}` `` annotations and TextMate scope highlighting.
-- $\LaTeX$ math rendered to browser-native and lightweight [MathML](https://developer.mozilla.org/en-US/docs/Web/MathML) via [Temml](https://temml.org/).
-- Subposts for organizing series, rendered as one continuous scrollable document.
-- A fully responsive table of contents with active scrollspy highlighting.
-- Clickable heading anchors for permalinking to any section.
-- GitHub-style callouts/alerts via `:::` directives.
-- SEO optimization with granular metadata and [Open Graph](https://ogp.me/) tag control for each post.
-- [RSS](https://en.wikipedia.org/wiki/RSS) feed and sitemap generation.
-- Author profiles with a dedicated authors page and multi-author post support.
-- Post tags with a dedicated tags page for categorization and discovery.
-
-## Getting started
-
-1. Hit &ldquo;Use this template&rdquo;, the big green button on the top right, to create a new repository in your own GitHub account with this template.
-
-2. Clone the repository:
-
-   ```bash
-   git clone https://github.com/[YOUR_USERNAME]/[YOUR_REPO_NAME].git
-   cd [YOUR_REPO_NAME]
-   ```
-
-3. Install dependencies:
-
-   ```bash
-   bun install
-   ```
-
-4. Start the development server:
-
-   ```bash
-   bun dev
-   ```
-
-5. Open your browser and visit `http://localhost:4321` to get started. The following commands are also available:
-
-   | Command                | Description                                       |
-   | ---------------------- | ------------------------------------------------- |
-   | `bun run build`        | Build the production site to `dist/`              |
-   | `bun run preview`      | Preview the built project locally                 |
-   | `bun run astro`        | Run Astro CLI commands                            |
-   | `bun run format`       | Format all files using [Biome](https://biomejs.dev/) |
-   | `bun run format:check` | Check formatting without writing                  |
+```bash
+git clone git@github.com:ebx32/ebx32.github.io.git portfolio
+cd portfolio
+bun install
+bun dev
+##########
+bun run format
+bun run format:check
+```
 
 ### Site configuration
 
@@ -78,7 +37,6 @@ export const SOCIALS: { href: string; label: string; icon: SvgComponent }[] = [
 ]
 ```
 
-Your site's production URL is configurable in `astro.config.ts` as the `site` field, which is used for the sitemap, RSS feed, and canonical URLs.
 
 ### Color palette
 
@@ -118,49 +76,22 @@ Favicons are generated using [RealFaviconGenerator](https://realfavicongenerator
 
 ### Blog posts
 
-Add new blog posts as Markdown files in the `src/content/blog/` directory, either as a bare `your-post.md` or as a `your-post/index.md` folder (which lets you colocate assets). Use the following frontmatter structure:
-
 ```yml
 ---
 title: "Your Post Title"
 description: "A brief description of your post!"
 date: 2026-01-01
+order: 0 #opt
 authors:
   - enscribe
-image: ./assets/banner.png
-tags:
+image: ./assets/banner.png #opt
+tags: #opt
   - tag1
   - tag2
+draft: false #opt
 ---
 ```
 
-The blog post schema is defined as follows:
-
-| Field         | Type (Zod)               | Requirements                                                                                                                                                                  | Required |
-| ------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
-| `title`       | `string`                 | Should be ≤60 characters.                                                                                                                                                     | Yes      |
-| `description` | `string`                 | Should be ≤155 characters.                                                                                                                                                    | Yes      |
-| `date`        | `coerce.date()`          | Must be in `YYYY-MM-DD` format.                                                                                                                                               | Yes      |
-| `order`       | `number`                 | Sort order for subposts within a series. Defaults to `0` if not provided.                                                                                                     | Optional |
-| `tags`        | `string[]`               | Preferably use kebab-case for these.                                                                                                                                          | Optional |
-| `authors`     | `reference("authors")[]` | Each entry must match the id of a file in `src/content/authors/` (e.g. if their file is named `jane-doe.md`, use `jane-doe` in the array). Validated at build time.           | Yes      |
-| `image`       | `image()`                | Should be exactly 1200px &times; 630px.                                                                                                                                       | Optional |
-| `draft`       | `boolean`                | Defaults to `false` if not provided. You can also prefix a filename with `_` to hide it from the content loader entirely.                                                     | Optional |
-
-### Subposts
-
-A post becomes a series by nesting sibling Markdown files next to its `index.md`:
-
-```
-src/content/blog/
-├── a-standalone-post.md
-└── my-series/
-    ├── index.md
-    ├── getting-started.md
-    └── going-further.md
-```
-
-The entire series renders as one continuous document, with the address bar syncing as you scroll between parts. Every subpost still gets its own URL (`/blog/my-series/getting-started`). Use the `order` frontmatter field to control the sequence. Only one level of nesting is supported, so files nested any deeper are ignored.
 
 ### Markdown extensions
 
@@ -177,70 +108,3 @@ A few authoring features exist that extend beyond standard Markdown:
 - Math is written as `$inline$` or `$$display$$` $\LaTeX$ and rendered to MathML at build time.
 - Inline code ending in an annotation gets syntax highlighting: `` `const x = 1{:ts}` `` highlights as TypeScript, and `` `text{:.string}` `` paints with the theme's color for a [TextMate scope](https://macromates.com/manual/en/language_grammars).
 
-### Authors
-
-Add author information in `src/content/authors/` as Markdown files. A file named `[author-name].md` can be associated with a blog post if `"author-name"` (the id) is added to the `authors` field:
-
-```yml
----
-name: "enscribe"
-pronouns: "he/him"
-avatar: "https://avatars.githubusercontent.com/u/71956291?v=4"
-bio: "d(-_-)b"
-mail: "jason@enscribe.dev"
-socials:
-  website: "https://enscribe.dev"
-  twitter: "https://twitter.com/enscrbe"
-  github: "https://github.com/jktrn"
----
-```
-
-The author schema is defined as follows:
-
-| Field      | Type (Zod)                                 | Requirements                                                                                                                                                             | Required |
-| ---------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
-| `name`     | `string`                                   | n/a                                                                                                                                                                      | Yes      |
-| `pronouns` | `string`                                   | n/a                                                                                                                                                                      | Optional |
-| `avatar`   | `url()` or `string.startsWith("/")`        | Should be either a valid URL or a path starting with `/`. | Yes      |
-| `bio`      | `string`                                   | n/a                                                                                                                                                                      | Optional |
-| `mail`     | `email()`                                  | Must be a valid email address.                                                                                                                                           | Optional |
-| `socials`  | `record(string, url())`                    | A map of any label you like to a valid URL. Each label is matched to an icon in `src/components/SocialIcons.astro`.                                                      | Optional |
-
-### Projects
-
-Add projects in `src/content/projects/` as Markdown files:
-
-```yml
----
-name: "Project A"
-description: "This is an example project description! You should replace this with a description of your own project."
-tags: ["Framework A", "Library B", "Tool C", "Resource D"]
-image: "./placeholder.png"
-link: "https://example.com"
-startDate: "2024-01-01"
-endDate: "2024-02-01"
----
-```
-
-The project schema is defined as follows:
-
-| Field         | Type (Zod)      | Requirements                            | Required |
-| ------------- | --------------- | --------------------------------------- | -------- |
-| `name`        | `string`        | n/a                                     | Yes      |
-| `description` | `string`        | n/a                                     | Yes      |
-| `link`        | `url()`         | Must be a valid URL.                    | Yes      |
-| `tags`        | `string[]`      | n/a                                     | Optional |
-| `image`       | `image()`       | Should be exactly 1200px &times; 630px. | Optional |
-| `startDate`   | `coerce.date()` | Must be in `YYYY-MM-DD` format.         | Optional |
-| `endDate`     | `coerce.date()` | Must be in `YYYY-MM-DD` format.         | Optional |
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-Built with &hearts; by [enscribe](https://enscribe.dev)!
-
-[Stargazers]: https://img.shields.io/github/stars/jktrn/astro-erudite?color=fafafa&logo=github&logoColor=fff&style=flat
-[Astro Version]: https://img.shields.io/github/package-json/dependency-version/jktrn/astro-erudite/astro?color=0a0a0a&logo=astro&logoColor=fff&style=flat
-[Dependencies]: https://img.shields.io/badge/dependencies-13-fafafa?style=flat
-[License]: https://img.shields.io/github/license/jktrn/astro-erudite?color=0a0a0a&logo=github&logoColor=fff&style=flat
